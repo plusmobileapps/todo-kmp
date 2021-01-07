@@ -1,19 +1,40 @@
 package com.plusmobileapps.composeui
-import androidx.compose.material.Text
-import androidx.compose.material.Button
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
-import com.plusmobileapps.sharedcode.platform
+import androidx.compose.ui.Modifier
+import com.plusmobileapps.sharedcode.TodoRepository
 
 @Composable
-fun App() {
-    var text by remember { mutableStateOf("Hello, World!") }
-
+fun App(repository: TodoRepository) {
+    var textField by remember { mutableStateOf("") }
     MaterialTheme {
-        Button(onClick = {
-            text = "Hello, ${platform()}"
-        }) {
-            Text(text)
+        Column {
+            TopAppBar(title = { Text("Todo") }, actions = {
+                TodoDropdownMenu(
+                    onClearAllClicked = { repository.deleteAll() },
+                    onClearCheckedClicked = { repository.deleteChecked() }
+                )
+            })
+
+            Box(modifier = Modifier.weight(1F)) {
+                TodoList(repository)
+            }
+
+            TodoInput(
+                text = textField,
+                onTextChanged = {
+                    textField = it.replace("[\n\r]".toRegex(), "")
+                },
+                onAddClicked = {
+                    repository.insert(textField)
+                    textField = ""
+                }
+            )
         }
     }
 }

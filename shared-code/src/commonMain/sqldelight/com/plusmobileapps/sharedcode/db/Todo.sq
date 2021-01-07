@@ -1,0 +1,32 @@
+CREATE TABLE Todo(
+id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+text TEXT NOT NULL,
+is_checked INTEGER AS Boolean NOT NULL DEFAULT 0
+);
+
+insertItem:
+INSERT OR REPLACE INTO Todo(text)VALUES(?);
+
+selectAll:
+SELECT * FROM Todo;
+
+toggleChecked:
+UPDATE Todo
+SET is_checked = ?
+WHERE id = ?;
+
+updateText:
+UPDATE Todo
+SET text = ?
+WHERE id = ?;
+
+deleteAll:
+DELETE FROM Todo;
+
+deleteChecked:
+DELETE FROM Todo
+WHERE is_checked = 1;
+
+deleteItem:
+DELETE FROM Todo
+WHERE id = ?;

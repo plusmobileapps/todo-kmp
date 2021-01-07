@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("com.squareup.sqldelight")
 }
 
 group = "com.plusmobileapps"
@@ -22,10 +23,18 @@ kotlin {
             kotlinOptions.jvmTarget = "11"
         }
     }
+    val COROUTINES_VERSION = "1.4.2-native-mt"
+    val SQLDELIGHT_VERSION = "1.4.4"
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$COROUTINES_VERSION")  {
+                    version {
+                        strictly(COROUTINES_VERSION)
+                    }
+                }
+                implementation("com.squareup.sqldelight:coroutines-extensions:$SQLDELIGHT_VERSION")
             }
         }
         val commonTest by getting {
@@ -39,6 +48,7 @@ kotlin {
             dependencies {
                 api("androidx.appcompat:appcompat:1.2.0")
                 api("androidx.core:core-ktx:1.3.1")
+                implementation("com.squareup.sqldelight:android-driver:$SQLDELIGHT_VERSION")
             }
         }
         val androidTest by getting {
@@ -48,6 +58,7 @@ kotlin {
         }
         val desktopMain by getting {
             dependencies {
+                implementation("com.squareup.sqldelight:sqlite-driver:$SQLDELIGHT_VERSION")
             }
         }
         val desktopTest by getting
@@ -73,5 +84,12 @@ android {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+}
+
+sqldelight {
+    database("MyDatabase") {
+        packageName = "com.plusmobileapps.sharedcode.db"
+        sourceFolders = listOf("sqldelight")
     }
 }

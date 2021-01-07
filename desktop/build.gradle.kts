@@ -3,7 +3,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version "0.2.0-build132"
+    id("org.jetbrains.compose") version "0.3.0-build139"
 }
 
 group = "com.plusmobileapps"
@@ -19,6 +19,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(project(":composeui"))
+                implementation(project(":shared-code"))
                 implementation(compose.desktop.currentOs)
             }
         }

@@ -15,3 +15,11 @@ This is a Kotlin Multiplatform Todo application that targets Android, iOS, web a
 * [Decompose](https://github.com/arkivanov/Decompose) - BLOC pattern
 * [SQL Delight](https://github.com/cashapp/sqldelight) - data persistence
 * [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) - async framework for kotlin
+
+## Android 
+
+![](docs/android.png)
+
+## Desktop
+
+![](docs/desktop.png)

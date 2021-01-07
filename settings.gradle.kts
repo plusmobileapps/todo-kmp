@@ -14,4 +14,4 @@ rootProject.name = "todo_kmp"
 include(":android")
 include(":desktop")
 include(":composeui")
-
+include("shared-code")

@@ -1,8 +1,5 @@
-import org.jetbrains.compose.compose
-
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version "0.2.0-build132"
     id("com.android.library")
 }
 
@@ -10,10 +7,15 @@ group = "com.plusmobileapps"
 version = "1.0"
 
 repositories {
+    mavenCentral()
     google()
+    jcenter()
 }
 
 kotlin {
+    /* Targets configuration omitted.
+    *  To find out how to configure the targets, please follow the link:
+    *  https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#setting-up-targets */
     android()
     jvm("desktop") {
         compilations.all {
@@ -23,13 +25,16 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material)
-                implementation(project(":shared-code"))
+                implementation(kotlin("stdlib-common"))
             }
         }
-        val commonTest by getting
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+            }
+        }
+
         val androidMain by getting {
             dependencies {
                 api("androidx.appcompat:appcompat:1.2.0")
@@ -41,8 +46,12 @@ kotlin {
                 implementation("junit:junit:4.13")
             }
         }
-        val desktopMain by getting
+        val desktopMain by getting {
+            dependencies {
+            }
+        }
         val desktopTest by getting
+
     }
 }
 
@@ -52,5 +61,17 @@ android {
     defaultConfig {
         minSdkVersion(24)
         targetSdkVersion(29)
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }

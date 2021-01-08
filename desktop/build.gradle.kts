@@ -3,7 +3,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version "0.3.0-build139"
+    id("org.jetbrains.compose") version Deps.JetBrains.Compose.VERSION
 }
 
 group = "com.plusmobileapps"
@@ -12,7 +12,7 @@ version = "1.0"
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "11"
+            kotlinOptions.jvmTarget = Deps.JetBrains.Compose.JVM_TARGET
         }
     }
     sourceSets {

@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.compose") version "0.3.0-build139"
+    id("org.jetbrains.compose") version Deps.JetBrains.Compose.VERSION
     id("com.android.application")
     kotlin("android")
 }
@@ -17,11 +17,11 @@ dependencies {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(Deps.Android.compileSdk)
     defaultConfig {
         applicationId = "com.plusmobileapps.android"
-        minSdkVersion(24)
-        targetSdkVersion(29)
+        minSdkVersion(Deps.Android.minSdk)
+        targetSdkVersion(Deps.Android.targetSdk)
         versionCode = 1
         versionName = "1.0"
     }

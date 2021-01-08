@@ -20,45 +20,43 @@ kotlin {
     android()
     jvm("desktop") {
         compilations.all {
-            kotlinOptions.jvmTarget = "11"
+            kotlinOptions.jvmTarget = Deps.JetBrains.Compose.JVM_TARGET
         }
     }
-    val COROUTINES_VERSION = "1.4.2-native-mt"
-    val SQLDELIGHT_VERSION = "1.4.4"
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$COROUTINES_VERSION")  {
+                implementation(Deps.JetBrains.Kotlin.coroutines)  {
                     version {
-                        strictly(COROUTINES_VERSION)
+                        strictly(Deps.JetBrains.Kotlin.COROUTINES_VERSION)
                     }
                 }
-                implementation("com.squareup.sqldelight:coroutines-extensions:$SQLDELIGHT_VERSION")
+                implementation(Deps.Squareup.SQLDelight.coroutineExtensions)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(Deps.JetBrains.Kotlin.testCommon)
+                implementation(Deps.JetBrains.Kotlin.testAnnotationsCommon)
             }
         }
 
         val androidMain by getting {
             dependencies {
-                api("androidx.appcompat:appcompat:1.2.0")
-                api("androidx.core:core-ktx:1.3.1")
-                implementation("com.squareup.sqldelight:android-driver:$SQLDELIGHT_VERSION")
+                api(Deps.AndroidX.appCompat)
+                api(Deps.AndroidX.coreKtx)
+                implementation(Deps.Squareup.SQLDelight.androidDriver)
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation("junit:junit:4.13")
+                implementation(Deps.AndroidX.Test.junit)
             }
         }
         val desktopMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:sqlite-driver:$SQLDELIGHT_VERSION")
+                implementation(Deps.Squareup.SQLDelight.sqliteDriver)
             }
         }
         val desktopTest by getting
@@ -67,11 +65,11 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(Deps.Android.compileSdk)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(29)
+        minSdkVersion(Deps.Android.minSdk)
+        targetSdkVersion(Deps.Android.targetSdk)
     }
 
     compileOptions {
